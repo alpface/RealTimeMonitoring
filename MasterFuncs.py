@@ -10,13 +10,13 @@ import StockMonitoring as sm
 import RealTimeScrapper as ns
 import pickle
 
-sleeptime_L = 15*60
-sleeptime_S = 15*60
+sleeptime_L = 5*60
+sleeptime_S = 5*60
 mu =  threading.RLock()
 logfile = WeChat.log_dir + '监控主程序.log'
 label = ' # 监控主程序 # '
 f = open(logfile,'a+')
-Master = {'Master':{'UserName':'', 'NickName':'FlameMan'}}
+Master = {'Master':{'UserName':'', 'NickName':'xiaoyuan'}}
 Debug = False
 #--------------------------------操作用户列表-------------------------------------------#   
 def SendAlert2Master( errmsg):
@@ -486,23 +486,23 @@ def isMasterWork(UserList, msg):
                 if news:
                     # 执行正常操作
                     if newOption == 'au':
-                        sndmsg = sndmsg + news.addUser2UserList(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + news.addUser2UserList(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'ru':
-                        sndmsg = sndmsg + news.rmUserFromUserList(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + news.rmUserFromUserList(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'akw':
-                        sndmsg = sndmsg + news.addKeyword2List(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + news.addKeyword2List(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'rkw':
-                        sndmsg = sndmsg + news.rmKeywordfromList(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + news.rmKeywordfromList(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'afc':
-                        sndmsg = sndmsg + news.addComp2FieldList(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au                        
+                        sndmsg = sndmsg + news.addComp2FieldList(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'rfc':
-                        sndmsg = sndmsg + news.rmCompfromFieldList(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au                        
+                        sndmsg = sndmsg + news.rmCompfromFieldList(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'srd':
-                        sndmsg = sndmsg + news.setResDays(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + news.setResDays(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'lup':
-                        sndmsg = sndmsg + news.listUserParas(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + news.listUserParas(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'sup':
-                        sndmsg = sndmsg + news.setUserParas(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + news.setUserParas(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     else:
                         sndmsg = sndmsg + '新闻监控类操作异常：我看不懂你说什么！\n' +  str(HelpMaster()) + '\n'
                         return False, sndmsg
@@ -513,11 +513,11 @@ def isMasterWork(UserList, msg):
                 if stock:
                     # 执行正常操作
                     if newOption == 'au':
-                        sndmsg = sndmsg + stock.addUser2UserList(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + stock.addUser2UserList(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'ru':
-                        sndmsg = sndmsg + stock.rmUserFromUserList(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + stock.rmUserFromUserList(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     elif newOption == 'srd':
-                        sndmsg = sndmsg + stock.setResDays(cmd_temp, 'FlameMan') # cmd_temp以命令开头，如au
+                        sndmsg = sndmsg + stock.setResDays(cmd_temp, 'xiaoyuan') # cmd_temp以命令开头，如au
                     else:
                          sndmsg = sndmsg + '股票监控类操作异常：我看不懂你说什么！\n' +  str(HelpMaster()) + '\n'
                          return False, sndmsg

@@ -16,18 +16,18 @@ import random
 import requests
 import json
 from dateutil import parser as dateParser
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+import urllib3
 # 禁用安全请求警告
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class TBaiDuNewsScapper:
-    __Author__ = 'FlameMan'
-    Master = {'Master':{'UserName':'', 'NickName':'FlameMan'}}
+    __Author__ = 'xiaoyuan'
+    Master = {'Master':{'UserName':'', 'NickName':'xiaoyuan'}}
     initNewsinList = 100
     maxNewsinList = 2000
     maxUserNum = 5
     # NewsList 仅能在初始化或者发送提醒消息后更改，切记！
-    extMsg = '百度新闻实时监控下线，管理员正在处理。有急事请联系管理员：18910241406！'
+    extMsg = '百度新闻实时监控下线，管理员正在处理。有急事请联系管理员：18810181988！'
     label = ' # 百度新闻实时监控程序 # '
     newsNumpPage = 20
     maximumNews2Get = 300
@@ -113,10 +113,10 @@ class TBaiDuNewsScapper:
                 raise Exception(errmsg)
         else:
             self.UserList = {}  #第一个默认为主账号，其余为副账号
-            self.keywordList = ['一带一路'] # 每次更新keyswords时，需要同步更新residDays
-            self.subkeywordList = {self.keywordList[0]:set(['丝绸之路'])} # 副标签的作用是，每个关键词可以依次循环搜索副关键词，并查询其新闻内容；每个新闻中，应该在标题或者摘要中包含至少一个主关键词或者副关键词，否则认为是垃圾信息
+            self.keywordList = ['科技'] # 每次更新keyswords时，需要同步更新residDays
+            self.subkeywordList = {self.keywordList[0]:set(['创新'])} # 副标签的作用是，每个关键词可以依次循环搜索副关键词，并查询其新闻内容；每个新闻中，应该在标题或者摘要中包含至少一个主关键词或者副关键词，否则认为是垃圾信息
             self.serachRangeOpts = {self.keywordList[0]:{'百度新闻':True, '百度网页':False,'搜狗新闻':False,'搜狗微信':False,'今日头条':False }}
-            self.companyInFiled = ['一带一路']
+            self.companyInFiled = ['科技']
             self.numOfNewsInEachScan = 60
             self.numOfNewsInFieldComp = 60
             self.defaultSortMethod = 'date'
@@ -145,7 +145,7 @@ class TBaiDuNewsScapper:
             # 检查关键词，并设置有效期
             if len(self.keywordList) < 1:
                 with self.mu:    ##加锁
-                    self.keywordList.append('一带一路')
+                    self.keywordList.append('科技')
                     for keyword in self.keywordList:
                          self.residDays[keyword] = 365
             try: 
@@ -495,6 +495,8 @@ class TBaiDuNewsScapper:
                 tempvalues = new_output.values()
                 if Output_sum[news] not in tempvalues: #去重(仅去除完全相同的新闻)
                     keysen = ['周末消息重磅来袭', '重磅利好', '重大利好消息', '节后重大利好消息', '最新消息利好',  '最新利好消息', '罕见利好消息', '特大利好强势来袭', '特大利好消息']
+                    # kws = list(localKeyWord) # 将set强转为list 然后将其元素添加到需要过滤的列表中 xiaoyuan add
+                    # keysen += kws
                     symbol = [' ', '、']
                     Flag = True
                     for key in keysen:
@@ -505,14 +507,16 @@ class TBaiDuNewsScapper:
                     if '澳门' in Output_sum[news]['title'] and '娱乐场' in Output_sum[news]['title']:
                         Flag = False    
                     if '华股财经' in Output_sum[news]['author']:
-                        Flag = False                           
-                    for symb in symbol:
-                        if Output_sum[news]['title'].count(symb) >= 3:
-                            Flag = False
-                    if (Output_sum[news]['title'] + Output_sum[news]['author']) in news_assemble:
+                        Flag = False
+                    title = Output_sum[news]['title']
+                    author = Output_sum[news]['author']
+                    # for symb in symbol:
+                    #     if title.count(symb) >= 3:
+                    #         Flag = False
+                    if (title + author) in news_assemble:
                         Flag = False
                     if Flag:
-                        news_assemble.update([Output_sum[news]['title'] + Output_sum[news]['author']])
+                        news_assemble.update(title + author)
                         new_output.setdefault(news, Output_sum[news])
         else:
             print(self.label + '抓取关键词 【' + str(keywords) + '】新闻失败！' )
@@ -1375,7 +1379,8 @@ class TBaiDuNewsScapper:
                 numOfNews = self.maximumNews2Get
             fileName = self.getFileName('keyword')
             sortMethod = paras[4]
-            if mainUser != self.getMainUser() and mainUser != 'XuKailong' and mainUser != 'ShiRui': # 这两个用户或者主账户均有权限
+            print("mainUser is " + mainUser)
+            if mainUser != self.getMainUser() and mainUser != 'xiaoyuan' and mainUser != 'xiaoyuan': # 这两个用户或者主账户均有权限
                 Output = '# 忽略删除关键词：主账号名不符合！'
                 return Flag, Output
             if keyword in self.keywordList or mainUser == 'XuKailong':  # 不在列表的关键词不能查询
@@ -1408,7 +1413,7 @@ class TBaiDuNewsScapper:
             mainUser = paras[1]
             fileName = self.getFileName('fields_' + mainUser)
 # 仅对ShiRui或者XuKailong开放
-            if self.getMainUser() != 'ShiRui' and self.getMainUser() != 'XuKailong': # 只有这两个个用户可以获取
+            if self.getMainUser() != 'xiaoyuan' and self.getMainUser() != 'xiaoyuan': # 只有这两个个用户可以获取
                 print('主用户为：' + self.getMainUser())
                 Output = '# 获取同行新闻失败！'
                 return Flag, Output
@@ -1574,7 +1579,7 @@ class TBaiDuNewsScapper:
                         #判断是否小于15天
                         if  int(self.residDays[keyword]) < 15:
                             WeChat.SendWeChatMsgToUserList(self.UserList, self.label + '您的监控关键词 【' + keyword + ' 】 还有' + str(self.residDays[keyword] ) + ' 就要过期了，请及时联系管理员延期！\n' + \
-                        '微信： MoBeiHuyang；手机：18910241406', self.logfile) # 向所有用户通知keywords变化信息
+                        '微信： xiaoyuan；手机：18810181988', self.logfile) # 向所有用户通知keywords变化信息
                     self.ResSetFlag = True
                 else:
                     print('已经设置用户 ' + str(self.getMainUser()) + '新闻监控有效期！')

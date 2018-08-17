@@ -20,9 +20,9 @@ global __Author__
 global Master
 global WeChatLogged
 WeChatLogged = False
-__Author__ = 'FlameMan'
-Master = {'Master':{'UserName':'', 'NickName':'FlameMan'}}
-UserList = {'XuKailong':{'UserName':'', 'NickName':'FlameMan', 'Stock':None, 'News':None},\
+__Author__ = 'xiaoyuan'
+Master = {'Master':{'UserName':'', 'NickName':'xiaoyuan'}}
+UserList = {'xiaoyuan':{'UserName':'', 'NickName':'xiaoyuan', 'Stock':None, 'News':None},\
             }   #初始用户列表
 
 global f, logfile, initMsg, label
@@ -287,7 +287,7 @@ def text_reply(msg):
         else:
         # 如果非用户，进行处理
             return
-#            sndmsg = ' 这是本人小号，不常登陆。有事请联系微信：MoBeiHuYang，或者电话：18910241406！'
+#            sndmsg = ' 这是本人小号，不常登陆。有事请联系微信：xiaoyuan，或者电话：18810181988'
 #            SendWeChatTextMsg(sndmsg, msg['FromUserName'], msg['User']['NickName'],logfile)
 #            sndmsg = getRespons(msg['Text'], 90)
 #            SendWeChatTextMsg(sndmsg, msg['FromUserName'], msg['User']['NickName'],logfile)
@@ -309,7 +309,7 @@ def download_files(msg):
 def add_friend(msg):
     itchat.add_friend(**msg['Text']) # 该操作会自动将新好友的消息录入，不需要重载通讯录
     SendWeChatTextMsg('Nice to meet you!', msg['RecommendInfo']['UserName'], msg['RecommendInfo']['UserName'])
-    sndmsg = ' 这是本人小号，不常登陆。有事请联系微信：MoBeiHuYang，或者电话：18910241406！'
+    sndmsg = ' 这是本人小号，不常登陆。有事请联系微信：xiaoyuan，或者电话：18810181988！'
     SendWeChatTextMsg(sndmsg, msg['FromUserName'], msg['User']['NickName'],'非用户聊天日志.log')
     sndmsg = getRespons('no', 90)
     SendWeChatTextMsg(sndmsg, msg['FromUserName'], msg['User']['NickName'],'非用户聊天日志.log')
@@ -318,7 +318,7 @@ def add_friend(msg):
 def text_reply(msg):
     if msg['isAt']:
         SendWeChatTextMsg(u'@%s\u2017I received: %s' % (msg['ActualNickName'], msg['Content']),  msg['FromUserName'], msg['User']['NickName'])
-        sndmsg = ' 这是本人小号，不常登陆。有事请联系微信：MoBeiHuYang，或者电话：18910241406！'
+        sndmsg = ' 这是本人小号，不常登陆。有事请联系微信：xiaoyuan，或者电话：18810181988！'
         SendWeChatTextMsg(sndmsg, msg['FromUserName'], msg['User']['NickName'],'非用户聊天日志.log')
         sndmsg = getRespons('no', 90)
         SendWeChatTextMsg(sndmsg, msg['FromUserName'], msg['User']['NickName'],'非用户聊天日志.log')

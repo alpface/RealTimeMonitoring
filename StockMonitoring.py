@@ -13,9 +13,9 @@ import threading  # 用于多线程工作
 
 class TStockMonitor:
     #----------------------------- 实例间共享变量定义（一个实例中变化，其它实例也会变化 ----------------------------------#
-    __Author__ = 'FlameMan'
-    Master = {'Master':{'UserName':'', 'NickName':'FlameMan'}}
-    __ALERTMAX__ = 3
+    __Author__ = 'xiaoyuan'
+    Master = {'Master':{'UserName':'', 'NickName':'xiaoyuan'}}
+    __ALERTMAX__ = 300 # 允许给用户发送股票的最大次数
     SendWebChat = 1
     sleeptime_onduty = 1
     sleeptime_offduty = 3
@@ -36,7 +36,7 @@ class TStockMonitor:
     str('%02d' %endtime[kPeriod1][kHr]) + ':' + str('%02d' %endtime[kPeriod1][kMin]) + ':' + str('%02d' %endtime[kPeriod1][kSec]) + '， ' + \
     str('%02d' %starttime[kPeriod2][kHr]) + ':' + str('%02d' %starttime[kPeriod2][kMin]) + ':' + str('%02d' %starttime[kPeriod2][kSec]) + ' -- ' +\
     str('%02d' %endtime[kPeriod2][kHr]) + ':' + str('%02d' %endtime[kPeriod2][kMin]) + ':' + str('%02d' %endtime[kPeriod2][kSec]) + '。 '
-    extMsg = '股票实时监控工具下线，管理员正在处理。有急事请联系管理员：18910241406！'
+    extMsg = '股票实时监控工具下线，管理员正在处理。有急事请联系管理员：18810181988！'
 # 股票信息
     def __init__(self,callName, nickName, mhotReload):
         """
@@ -592,7 +592,7 @@ class TStockMonitor:
                     #判断是否小于15天
                     if  int(self.residDays) < 15:
                         WeChat.SendWeChatMsgToUserList(self.UserList, self.label + '您的股票监控还有' + str(self.residDays) + ' 就要过期了，请及时联系管理员延期！\n' + \
-                        '微信： MoBeiHuyang；手机：18910241406', self.logfile) # 向所有用户通知keywords变化信息
+                        '微信： xiaoyuan；手机：18810181988', self.logfile) # 向所有用户通知keywords变化信息
                     self.ResSetFlag = True
                     print('用户 ' + str(self.getMainUser()) + '有效期：' + str(self.residDays) + '天！')
                 else:
